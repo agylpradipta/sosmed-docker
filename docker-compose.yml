@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: sosmed-app
+    restart: always
+    working_dir: /var/www/
+    volumes:
+      - ./sosial-media/:/var/www/
+
+  nginx:
+    image: nginx:1.19-alpine
+    container_name: sosmed-nginx
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./sosial-media/:/var/www/
+      - ./nginx/sites-enabled:/etc/nginx/sites-enabled
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
