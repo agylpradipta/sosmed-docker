@@ -15,9 +15,33 @@ services:
     image: nginx:1.19-alpine
     container_name: sosmed-nginx
     restart: always
+    depends_on:
+      - db
     ports:
       - "8080:80"
     volumes:
       - ./sosial-media/:/var/www/
       - ./nginx/sites-enabled:/etc/nginx/sites-enabled
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+  db:
+    image: mysql:5.7
+    container_name: sosmed-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'dbsosmed'
+      # So you don't have to use root, but you can if you like
+      MYSQL_USER: 'devopscilsy'
+      # You can use whatever password you like
+      MYSQL_PASSWORD: '1234567890'
+      # Password for root access
+      MYSQL_ROOT_PASSWORD: 'root-cilsy'
+    ports:
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3309:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      - '3309'
+      # Where our data will be persisted
+    volumes:
+      - ./data:/var/lib/mysql
