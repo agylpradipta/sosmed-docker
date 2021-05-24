@@ -24,7 +24,7 @@ services:
       - ./nginx/sites-enabled:/etc/nginx/sites-enabled
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
   db:
-    image: mysql:5.7
+    image: mysql:8.0.25
     container_name: sosmed-db
     restart: always
     environment:
